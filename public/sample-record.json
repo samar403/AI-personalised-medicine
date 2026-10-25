@@ -1,0 +1,698 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      {
+        "display": "SYNTHETIC sample record for the Allele demo"
+      }
+    ]
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "family": "Sample",
+            "given": [
+              "Jordan"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1968-03-14",
+        "address": [
+          {
+            "city": "Springfield"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "53741008",
+              "display": "Coronary artery disease, status post drug-eluting stent"
+            }
+          ],
+          "text": "Coronary artery disease, status post drug-eluting stent"
+        },
+        "onsetDateTime": "2025-11-02"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "59621000",
+              "display": "Essential hypertension"
+            }
+          ],
+          "text": "Essential hypertension"
+        },
+        "onsetDateTime": "2019-05-10"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "55822004",
+              "display": "Hyperlipidemia"
+            }
+          ],
+          "text": "Hyperlipidemia"
+        },
+        "onsetDateTime": "2018-09-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "235595009",
+              "display": "Gastro-oesophageal reflux disease"
+            }
+          ],
+          "text": "Gastro-oesophageal reflux disease"
+        },
+        "onsetDateTime": "2021-02-15"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "35489007",
+              "display": "Depressive disorder"
+            }
+          ],
+          "text": "Depressive disorder"
+        },
+        "onsetDateTime": "2023-06-20"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "text": "Clopidogrel 75 mg tablet"
+        },
+        "dosage": [
+          {
+            "text": "75 mg once daily"
+          }
+        ],
+        "effectiveDateTime": "2025-11-03"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "text": "Aspirin 81 mg tablet"
+        },
+        "dosage": [
+          {
+            "text": "81 mg once daily"
+          }
+        ],
+        "effectiveDateTime": "2025-11-03"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "text": "Simvastatin 40 mg tablet"
+        },
+        "dosage": [
+          {
+            "text": "40 mg at night"
+          }
+        ],
+        "effectiveDateTime": "2018-10-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "text": "Omeprazole 20 mg capsule"
+        },
+        "dosage": [
+          {
+            "text": "20 mg once daily"
+          }
+        ],
+        "effectiveDateTime": "2021-02-20"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "text": "Escitalopram 10 mg tablet"
+        },
+        "dosage": [
+          {
+            "text": "10 mg once daily"
+          }
+        ],
+        "effectiveDateTime": "2023-07-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "text": "Lisinopril 10 mg tablet"
+        },
+        "dosage": [
+          {
+            "text": "10 mg once daily"
+          }
+        ],
+        "effectiveDateTime": "2019-05-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "AllergyIntolerance",
+        "code": {
+          "text": "Penicillin"
+        },
+        "criticality": "high",
+        "reaction": [
+          {
+            "manifestation": [
+              {
+                "text": "Hives"
+              }
+            ],
+            "severity": "moderate"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "13457-7",
+              "display": "LDL cholesterol (calculated)"
+            }
+          ],
+          "text": "LDL cholesterol (calculated)"
+        },
+        "valueQuantity": {
+          "value": 142,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2085-9",
+              "display": "HDL cholesterol"
+            }
+          ],
+          "text": "HDL cholesterol"
+        },
+        "valueQuantity": {
+          "value": 38,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2571-8",
+              "display": "Triglycerides"
+            }
+          ],
+          "text": "Triglycerides"
+        },
+        "valueQuantity": {
+          "value": 188,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2093-3",
+              "display": "Total cholesterol"
+            }
+          ],
+          "text": "Total cholesterol"
+        },
+        "valueQuantity": {
+          "value": 212,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c"
+            }
+          ],
+          "text": "Hemoglobin A1c"
+        },
+        "valueQuantity": {
+          "value": 6.1,
+          "unit": "%"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33914-3",
+              "display": "eGFR"
+            }
+          ],
+          "text": "eGFR"
+        },
+        "valueQuantity": {
+          "value": 74,
+          "unit": "mL/min/1.73m2"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2160-0",
+              "display": "Creatinine"
+            }
+          ],
+          "text": "Creatinine"
+        },
+        "valueQuantity": {
+          "value": 1.08,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2823-3",
+              "display": "Potassium"
+            }
+          ],
+          "text": "Potassium"
+        },
+        "valueQuantity": {
+          "value": 4.7,
+          "unit": "mmol/L"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "1742-6",
+              "display": "ALT"
+            }
+          ],
+          "text": "ALT"
+        },
+        "valueQuantity": {
+          "value": 32,
+          "unit": "U/L"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "3016-3",
+              "display": "TSH"
+            }
+          ],
+          "text": "TSH"
+        },
+        "valueQuantity": {
+          "value": 2.1,
+          "unit": "mIU/L"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "1989-3",
+              "display": "Vitamin D (25-OH)"
+            }
+          ],
+          "text": "Vitamin D (25-OH)"
+        },
+        "valueQuantity": {
+          "value": 45,
+          "unit": "nmol/L"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "718-7",
+              "display": "Hemoglobin"
+            }
+          ],
+          "text": "Hemoglobin"
+        },
+        "valueQuantity": {
+          "value": 14.6,
+          "unit": "g/dL"
+        },
+        "effectiveDateTime": "2026-08-12"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "13457-7",
+              "display": "LDL cholesterol (calculated)"
+            }
+          ],
+          "text": "LDL cholesterol (calculated)"
+        },
+        "valueQuantity": {
+          "value": 151,
+          "unit": "mg/dL"
+        },
+        "effectiveDateTime": "2025-12-04"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ],
+          "text": "Blood pressure panel"
+        },
+        "effectiveDateTime": "2026-08-12",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic blood pressure"
+                }
+              ],
+              "text": "Systolic blood pressure"
+            },
+            "valueQuantity": {
+              "value": 138,
+              "unit": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic blood pressure"
+                }
+              ],
+              "text": "Diastolic blood pressure"
+            },
+            "valueQuantity": {
+              "value": 86,
+              "unit": "mm[Hg]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

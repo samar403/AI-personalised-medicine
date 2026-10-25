@@ -9,7 +9,7 @@ export const EMERGENCY_NOTE = "If you think you are having a medical emergency, 
 const RED_FLAGS: { pattern: RegExp; topic: string }[] = [
   { pattern: /\b(chest (pain|pressure|tightness)|crushing pain|heart attack)\b/i, topic: "chest pain" },
   { pattern: /\b(can'?t|cannot|struggling to|hard to|trouble) breath(e|ing)?\b|\bshort(ness)? of breath\b.*\b(sudden|severe|worse)\b/i, topic: "breathing difficulty" },
-  { pattern: /\b(face (is )?droop|slurred speech|arm weakness|sudden (numbness|weakness|confusion)|stroke)\b/i, topic: "stroke symptoms" },
+  { pattern: /\b(face (is )?droop\w*|slurred speech|speech is slurred|arm weakness|sudden (numbness|weakness|confusion)|stroke)\b/i, topic: "stroke symptoms" },
   { pattern: /\b(suicid\w*|kill (myself|me)|end (my|it all)|self[- ]harm|want to die|overdos\w*)\b/i, topic: "self-harm" },
   { pattern: /\b(anaphyla\w*|throat (is )?(closing|swelling)|swollen (tongue|lips|throat))\b/i, topic: "severe allergic reaction" },
   { pattern: /\b(unconscious|passed out|not breathing|seizure|fitting)\b/i, topic: "collapse or seizure" },

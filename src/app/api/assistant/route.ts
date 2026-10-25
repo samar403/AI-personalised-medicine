@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { HttpError, parseBody, withAuth } from "@/lib/api";
-import { isAIEnabled } from "@/lib/ai/client";
 import { streamAssistant } from "@/lib/ai/assistant";
+import { heuristicAnswer } from "@/lib/ai/heuristics";
 import { describeSnapshot } from "@/lib/ai/context";
 import { runFindings } from "@/lib/clinical/findings";
 import { recordAudit } from "@/lib/audit";
 import { detectRedFlag, emergencyReply } from "@/lib/safety";
+import { aiAllowed } from "@/lib/services/ai";
 import { getVault, loadSnapshot } from "@/lib/services/snapshot";
 import { clientKey, rateLimit } from "@/lib/rate-limit";
 
@@ -21,7 +22,7 @@ const Body = z.object({
 
 const textResponse = (text: string) => new Response(text, { headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" } });
 
-/** Streams plain text chunks of Claude's answer. Red-flag messages get a fixed safety reply without calling the model. */
+/** Streams plain text chunks of Claude's answer, or returns an offline rules-engine answer. Red-flag messages get a fixed safety reply without calling the model. */
 export const POST = withAuth("caregiver", async ({ req, user }) => {
   const { messages } = await parseBody(req, Body);
   const flag = detectRedFlag(messages[messages.length - 1].content);
@@ -29,13 +30,14 @@ export const POST = withAuth("caregiver", async ({ req, user }) => {
     await recordAudit({ vaultId: user.vaultId, userId: user.id, action: "assistant.red_flag", entityType: "assistant", details: { topic: flag } });
     return textResponse(emergencyReply(flag));
   }
-  if (!isAIEnabled()) throw new HttpError(503, "The assistant needs an Anthropic API key. Add ANTHROPIC_API_KEY to your environment.");
-  const vault = await getVault(user.vaultId);
-  if (!vault.consents.ai) throw new HttpError(403, "AI analysis is turned off for this vault. The owner can enable it under Privacy & consent.");
   if (!rateLimit(`assistant:${user.id}:${clientKey(req)}`, 30, 60 * 60_000)) throw new HttpError(429, "Hourly assistant limit reached.");
-
+  const vault = await getVault(user.vaultId);
   const snapshot = await loadSnapshot(user.vaultId);
-  const stream = streamAssistant(describeSnapshot(snapshot, runFindings(snapshot)), messages);
+  const findings = runFindings(snapshot);
+  // Without a key or without AI consent, answer from the rules engine; nothing leaves the server.
+  if (!aiAllowed(vault)) return textResponse(heuristicAnswer(messages[messages.length - 1].content, snapshot, findings));
+
+  const stream = streamAssistant(describeSnapshot(snapshot, findings), messages);
   const encoder = new TextEncoder();
   const body = new ReadableStream<Uint8Array>({
     async start(controller) {

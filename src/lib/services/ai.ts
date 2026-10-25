@@ -29,11 +29,11 @@ async function withFallback<T extends { model: string }>(run: () => Promise<T>, 
   }
 }
 
-export async function createCarePlan(vaultId: string, userId: string) {
+export async function createCarePlan(vaultId: string, userId: string, opts: { offline?: boolean } = {}) {
   const vault = await getVault(vaultId);
   const snapshot = await loadSnapshot(vaultId);
   const findings = runFindings(snapshot);
-  const useAI = aiAllowed(vault);
+  const useAI = !opts.offline && aiAllowed(vault);
   const plan = await withFallback(
     () => generateCarePlan(snapshot, findings, useAI),
     () => heuristicPlan(snapshot, findings),
@@ -70,11 +70,11 @@ export async function checkMedication(vaultId: string, userId: string, name: str
   return { drug, alreadyTaking: already, hasGenome: Boolean(genes), geneRelevant, findings: forDrug, explanation };
 }
 
-export async function createBrief(vaultId: string, userId: string) {
+export async function createBrief(vaultId: string, userId: string, opts: { offline?: boolean } = {}) {
   const vault = await getVault(vaultId);
   const snapshot = await loadSnapshot(vaultId);
   const findings = runFindings(snapshot);
-  const useAI = aiAllowed(vault);
+  const useAI = !opts.offline && aiAllowed(vault);
   const narrative = await withFallback(
     () => writeBriefNarrative(snapshot, findings, useAI),
     () => heuristicBrief(snapshot, findings),

@@ -624,4 +624,4 @@ export function affectedDrugs(g: GeneResult) {
 }
 
 /** Phenotypes that matter even before any related drug is prescribed. */
-export const HIGH_STAKES_GENES = new Set(["DPYD", "TPMT", "NUDT15", "HLA-B", "F5", "F2", "CYP2C19", "SLCO1B1", "CYP2D6"]);
+export const HIGH_STAKES_GENES = new Set(["DPYD", "TPMT", "NUDT15", "HLA-B", "F5", "F2", "CYP2C19", "CYP2C9", "SLCO1B1", "CYP2D6"]);

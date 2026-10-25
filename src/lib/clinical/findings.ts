@@ -66,7 +66,7 @@ export function runFindings(s: Snapshot): Finding[] {
           ruleCode: `${rule.code}:${med.drug}`,
           kind: "gene_drug",
           priority: rule.priority,
-          title: `${capital(med.drug)}: ${rule.title.charAt(0).toLowerCase()}${rule.title.slice(1)}`,
+          title: rule.title.toLowerCase().includes(med.drug) ? rule.title : `${capital(med.drug)}: ${rule.title.charAt(0).toLowerCase()}${rule.title.slice(1)}`,
           summary: rule.summary,
           recommendation: rule.recommendation,
           rationale: `You take ${med.name}${med.dose ? ` (${med.dose})` : ""}, and your ${gene.gene} result is ${gene.diplotype}: ${gene.phenotype.toLowerCase()}.`,

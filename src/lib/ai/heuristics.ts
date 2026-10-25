@@ -1,6 +1,6 @@
 // Offline engine: used when there is no API key, or when the owner has not consented to AI
 // processing. It assembles plans and explanations from the deterministic findings only, and says so.
-import type { Finding, Snapshot } from "@/lib/clinical/findings";
+import { PRIORITY_RANK, type Finding, type Snapshot } from "@/lib/clinical/findings";
 import type { CarePlan } from "./plan";
 import type { MedCheckExplanation } from "./medcheck";
 import type { BriefNarrative } from "./brief";
@@ -109,4 +109,49 @@ export function heuristicBrief(s: Snapshot, findings: Finding[]): BriefNarrative
     discussionPoints: (serious.length ? serious : findings).slice(0, 5).map((f) => `${f.title}. ${f.recommendation}`),
     model: "offline-rules",
   };
+}
+
+const STOP = new Set(["what", "does", "mean", "my", "the", "and", "for", "with", "this", "that", "should", "about", "which", "are", "is", "of", "to", "in", "me", "i", "a", "an", "it", "do", "how", "why", "has", "have", "gone", "up", "at", "next", "ask", "result", "plain", "english", "explain", "week"]);
+
+/** Offline assistant: answers from the vault by matching the question to genes, medicines, labs, vitals and findings. */
+export function heuristicAnswer(question: string, s: Snapshot, findings: Finding[]): string {
+  const words = question.toLowerCase().match(/[a-z0-9]+/g)?.filter((w) => w.length > 1 && !STOP.has(w)) ?? [];
+  const hits = (text: string) => words.filter((w) => text.toLowerCase().includes(w)).length;
+  const wantsMeds = /\b(medicine|medication|drug|pill|prescription)s?\b/i.test(question);
+  const wantsVisit = /\b(visit|appointment|doctor|cardiologist|clinician|gp|ask)\b/i.test(question);
+
+  const genes = (s.genes ?? []).filter((g) => hits(g.gene) > 0 || (wantsMeds && /gene/i.test(question) && g.actionable));
+  const meds = s.meds.filter((m) => hits(`${m.name} ${m.drug}`) > 0);
+  const labs = s.labs.filter((l) => l.test !== "other" && hits(`${l.name} ${l.test}`) > 0);
+  const vitals = s.vitals.filter((v) => hits(`${v.label} ${v.metric}`) > 0 || (/heart rate|hrv|sleep|steps/i.test(question) && hits(v.label) > 0));
+  const scored = findings
+    .map((f) => ({ f, score: hits(`${f.title} ${f.summary} ${f.ruleCode} ${f.evidence.map((e) => e.detail).join(" ")}`) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score || PRIORITY_RANK[a.f.priority] - PRIORITY_RANK[b.f.priority]);
+  // Keep only findings that match about as well as the best one, so a stray shared word doesn't pull in noise.
+  let matched = scored.filter((x) => x.score >= scored[0].score / 2).map((x) => x.f);
+  if (wantsMeds && !matched.length) matched = findings.filter((f) => f.kind === "gene_drug" || f.kind === "drug_drug");
+  if (wantsVisit && !matched.length) matched = [...findings].sort((a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority]);
+  matched = matched.slice(0, 4);
+
+  const out: string[] = [];
+  for (const g of genes.slice(0, 3)) out.push(`**${g.gene} ${g.diplotype}**: ${g.phenotype}. ${g.note}`.trim());
+  for (const m of meds.slice(0, 3)) if (!matched.some((f) => f.evidence.some((e) => e.detail.toLowerCase().includes(m.drug)))) out.push(`**${m.name}**${m.dose ? ` (${m.dose})` : ""}: no rule-based flags in your data.`);
+  for (const l of labs.slice(0, 3)) out.push(`**${l.name}**: ${l.value} ${l.unit} on ${l.takenAt.toISOString().slice(0, 10)}${l.label ? ` (${l.label})` : ""}.`);
+  for (const v of vitals.slice(0, 3)) out.push(`**${v.label}**: ${v.recentMean ?? "n/a"} ${v.unit} over the last 7 days${v.baselineMean != null ? `, against a baseline of ${v.baselineMean} ${v.unit}` : ""}.`);
+  if (matched.length) {
+    out.push("", "**Related findings**");
+    for (const f of matched) out.push(`- **${f.title}** (${f.priority}). ${f.recommendation}`);
+  }
+  const questions = [...new Set(matched.flatMap((f) => f.questions))].slice(0, 4);
+  if (questions.length) out.push("", "**Questions to bring to your clinician**", ...questions.map((q) => `- ${q}`));
+
+  if (!out.length) {
+    out.push(
+      "I couldn't match that question to anything in your vault. Try naming a gene (e.g. CYP2C19), a medicine, a lab test or a wearable metric.",
+      findings.length ? `Your highest-priority finding right now is **${[...findings].sort((a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority])[0].title}**.` : "",
+    );
+  }
+  out.push("", "_Offline answer from Allele's rules engine. Connect Claude for conversational answers. Check any medicine change with your clinician._");
+  return out.filter((l, i, a) => l !== "" || (i > 0 && a[i - 1] !== "")).join("\n");
 }
